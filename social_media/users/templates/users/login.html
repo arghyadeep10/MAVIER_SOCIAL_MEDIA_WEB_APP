@@ -1,0 +1,34 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <div style="background-color: rgb(243, 126, 91); margin-left: 3.875%; margin-right: 3.875%; margin-top: 11.625%;">
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%; ">
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h1 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Login</h1> </legend>
+                        <br>
+                        <!-- {{ form.as_p }} -->
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Login</button>
+                    </div>
+                </form>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Need an account? <a href="{% url 'register' %}" class="ml-2">Sign Up Today!</a>
+                    </small>
+                </div>
+            </div>    
+        </div>
+    </div>
+{% endblock content %}

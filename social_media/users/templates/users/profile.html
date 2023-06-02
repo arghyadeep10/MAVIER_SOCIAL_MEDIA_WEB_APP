@@ -1,0 +1,35 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <div class="content-section" style="background-color: rgb(49, 47, 43);">
+        <div class="content-section" style="background-color: black; margin-left: 15.5%; margin-right: 15.5%;">
+            <br>
+            <img src="{{ user.userprofile.image.url }}" alt="User Profile Picture" class="rounded-circle account-img" style="float: left;">
+            &nbsp;
+            <div class="media-body">
+                <h2 class="account-heading" style="color: rgb(255, 255, 255); font-family: 'Ubuntu', sans-serif;">{{ user.username }}</h2>
+                <p class="text-secondary" style="color: rgb(255, 255, 255); font-family: 'Ubuntu', sans-serif;">{{ user.email }}</p>
+            </div>
+            &nbsp;
+        </div>
+        <!-- FORM HERE -->
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%;">
+            <div class="form-group">
+                <form method="POST", enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h1 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Profile Info </h1> </legend>
+                        <br>
+                        {{ u_form.as_p }}
+                        {{ p_form.as_p }}
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+{% endblock content %}
+
+

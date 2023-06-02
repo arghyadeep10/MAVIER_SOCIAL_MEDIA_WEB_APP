@@ -1,0 +1,106 @@
+<!-- contains all the original posts posted by user -->
+
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <br>
+
+    <a href="{% url 'post-create' %}">
+        <button type="button" class="btn btn-danger btn-lg" style="margin-left: 15.5%; margin-right: 15.5%;">Create New Post </button>
+    </a>
+
+    <br>
+    <br>
+
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="width:69%; margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-family: 'Montserrat Alternates', sans-serif;">
+        <a href="{% url 'app-home' %}">
+            <button type="button" class="btn btn-primary" style="background-color: rgb(57, 95, 95);">New Posts</button>
+        </a>
+        &nbsp; &nbsp;
+        <a href="{% url 'app-shome' %}">
+            <button type="button" class="btn btn-primary" style="background-color: rgb(112, 33, 122);">Shared Posts</button>
+        </a>
+        &nbsp; &nbsp;
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            More
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="background-color: rgb(200, 200, 200);">
+            <li><a class="dropdown-item" href="{% url 'app-mnewhome' %}">My Posts</a></li>
+            <li><a class="dropdown-item" href="{% url 'app-msharehome' %}">My Shared Posts</a></li>
+          </ul>
+        </div>
+      </div>
+
+    {% if counter == 0 %} 
+        <br>
+        <br>
+        <div class="alert alert-secondary" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: large; font-weight: bold;">
+            You haven't made any posts yet. Create a Post Today and spread your knowledge with everyone!
+        </div>    
+    {% endif %} 
+
+    {% if counter != 0 %}
+        <br>
+        <br>
+        <div class="alert alert-danger" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+            My Original Posts
+        </div>     
+    {% endif %}    
+
+    {% for post in posts %}
+    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px;">
+            <img class="rounded-circle article-img" src="{{ post.author.userprofile.image.url }}" alt="Pro" style="float: left;">
+            <div class="media-body" style="margin-left: 10%;">
+                <a class="mr-2" href="{% url 'app-user-detail' post.author.id %}" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ post.author }} </a>
+                <br>
+                <small style="color: rgb(205, 207, 81); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ post.date_posted }} </small>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: white; padding: 0%;">
+                <h2><a class="article-title" href="{% url 'app-post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content"> {{ post.content }} </p>
+
+                
+                {% if post.temp_like_flag == 0 %}
+                    <a href="{% url 'post-like' post.id %}">
+                        <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Like <span class="badge bg-primary rounded-pill">{{ post.like_counter }}</span> </button>
+                    </a>
+                {% else %}    
+                    <a href="{% url 'post-like' post.id %}">
+                        <button type="button" class="btn btn-success btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Unlike <span class="badge bg-danger rounded-pill">{{ post.like_counter }}</span> </button>
+                    </a>
+                {% endif %}
+                &nbsp;
+                <a href="{% url 'app-post-detail' post.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 35%; padding: 0%;">Comment <span class="badge bg-primary rounded-pill">{{ post.comment_counter }}</span> </button>
+                </a>
+                &nbsp;
+                <a href="{% url 'sharedpost-create' post.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Share <span class="badge bg-primary rounded-pill">{{ post.share_counter }}</span> </button>
+                </a>
+            </div>
+        </article>
+
+        <br>
+    {% endfor %} 
+  
+    <div style="margin-left: 15.5%; margin-right: 15.5%; margin-bottom: 0px; padding: 8px 0px; font-size: 25px; font-weight: bold; text-align: center; background-color: rgb(247, 244, 244);">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+    
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+            <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+    </div> 
+{% endblock content %}

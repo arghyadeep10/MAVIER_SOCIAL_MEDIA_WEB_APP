@@ -1,0 +1,154 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <br>
+
+    <a href="{% url 'post-create' %}">
+        <button type="button" class="btn btn-danger btn-lg" style="margin-left: 15.5%; margin-right: 15.5%;">Create New Post </button>
+    </a>
+
+    <br>
+    <br>
+
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown" style="width:69%; margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-family: 'Montserrat Alternates', sans-serif;">
+        <a href="{% url 'app-home' %}">
+            <button type="button" class="btn btn-primary" style="background-color: rgb(57, 95, 95);">New Posts</button>
+        </a>
+        &nbsp; &nbsp;
+        <a href="{% url 'app-shome' %}">
+            <button type="button" class="btn btn-primary" style="background-color: rgb(112, 33, 122);">Shared Posts</button>
+        </a>
+        &nbsp; &nbsp;
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            More
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="background-color: rgb(200, 200, 200);">
+            <li><a class="dropdown-item" href="{% url 'app-mnewhome' %}">My New Posts</a></li>
+            <li><a class="dropdown-item" href="{% url 'app-msharehome' %}">My Shared Posts</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+    <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px;">
+        <img class="rounded-circle article-img" src="{{ object.author.userprofile.image.url }}" alt="Pro" style="float: left;">            
+        <div class="media-body" style="margin-left: 10%; padding: 10px 5px;">
+            <a class="mr-2" href="{% url 'app-user-detail' object.author.id %}" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ object.author }} </a>
+            <small style="color: rgb(181, 184, 9); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ object.date_posted }} </small>
+
+            {% if object.author == user %}
+                <div>
+                    <a href="{% url 'sharedpost-update' object.id %}" class="btn btn-secondary btn-sm mt-1 mb-1" style="background-color: rgb(70, 70, 173);">Update</a>
+                    <a href="{% url 'sharedpost-delete' object.id %}" class="btn btn-danger btn-sm mt-1 mb-1">Delete</a>
+                    <br>
+                    <form action="{% url 'liked-users-list-sharedposts' %}" method="POST" name="generic_form_3" style="float: left; margin-left: 0px;">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm mt-1 mb-1" type="submit" name="sharedpost_id" value="{{ sharedpost.id }}">View users who liked post</button>        
+                        </div>
+                    </form>
+                    <a href="#comm" class="btn btn-dark btn-sm mt-1 mb-1">View Comments</a>
+                </div>
+            {% endif %}
+
+            <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: white; padding: 0%;">
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="article-content"> {{ object.content }} </p>
+    
+            
+            {% if liked == False %}
+                <a href="{% url 'sharedpost-like' object.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Like <span class="badge bg-primary rounded-pill">{{ object.like_counter }}</span> </button>
+                </a>
+            {% elif liked == True %}    
+                <a href="{% url 'sharedpost-like' object.id %}">
+                    <button type="button" class="btn btn-success btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Unlike <span class="badge bg-danger rounded-pill">{{ object.like_counter }}</span> </button>
+                </a>
+            {% endif %}
+            &nbsp;
+                <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 35%; padding: 0%;">Comment <span class="badge bg-primary rounded-pill">{{ object.comment_counter }}</span> </button>
+            &nbsp;
+        </div>
+        
+        <br>    
+
+        <article class="media content-section" style="background-color: rgb(84 120 113); padding: 10px 5px;">
+            <img class="rounded-circle article-img" src="{{ object.shared_post.author.userprofile.image.url }}" alt="Pro" style="float: left;">                
+            <div class="media-body" style="margin-left: 10%;">
+                <a class="mr-2" href="{% url 'app-user-detail' object.shared_post.author.id %}" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ object.shared_post.author }} </a>
+                <small style="color: rgb(181, 184, 9); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ object.shared_post.date_posted }} </small>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: white; padding: 0%;">
+                <h2><a class="article-title" href="{% url 'app-post-detail' object.shared_post.id %}">{{ object.shared_post.title }}</a></h2>
+                <p class="article-content"> {{ object.shared_post.content }} </p>
+        
+                <!-- <a href="{% url 'post-like' object.shared_post.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 20%; padding: 0%;">Like <span class="badge bg-primary rounded-pill">{{ object.shared_post.like_counter }}</span> </button>
+                </a>
+                &nbsp;
+                <a href="{% url 'app-post-detail' object.shared_post.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 40%; padding: 0%;">Comment <span class="badge bg-primary rounded-pill">{{ object.shared_post.comment_counter }}</span> </button>
+                </a>
+                &nbsp;
+                <a href="{% url 'sharedpost-create' object.shared_post.id %}">
+                    <button type="button" class="btn btn-warning btn-sm" style="font-size: 80%; font-weight: bold; width: 25%; padding: 0%;">Share <span class="badge bg-primary rounded-pill">{{ object.shared_post.share_counter }}</span> </button>
+                </a> -->
+            </div>
+        
+            
+        </article>
+        
+        <br>
+    
+    </article>
+    
+    <br>
+
+    <div style="background-color: rgb(240, 152, 125); margin-left: 3.875%; margin-right: 3.875%;">
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%;">
+            <div class="form-group">
+                <form action="{% url 'comment-sharedpost' sharedpost.pk %}" method="POST" name="comment_form">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h3 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Comment on the Post</h3> </legend>
+                        <br>
+                   </fieldset>
+                   <div class="mb-3">
+                    <textarea class="form-control" name="content" rows="3"> </textarea>
+                   </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit" name="post_id" value="{{ sharedpost.id }}">Post Comment</button>
+                        
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+
+{% if comment_count != 0 %}    
+    <br>
+    <div id="comm" class="alert alert-info" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+        Comments
+    </div>
+{% endif %}        
+
+    
+    {% for comment in comments %}
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <img class="rounded-circle article-img" src="{{ comment.commenter.userprofile.image.url }}" alt="Pro" style="float: left;">
+            <div class="media-body" style="margin-left: 10%;">
+                <a class="mr-2" href="{% url 'app-user-detail' comment.commenter.id %}" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ comment.commenter.username }} </a>
+                <br>
+                <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ comment.date_commented }} </small>
+
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <a href="{% url 'app-sharedcomment-detail' comment.id %}" style="text-decoration: none;"><p class="article-content" style="color: black;"> {{ comment.comment_content }} </p></a>
+
+            </div>
+        </article>
+    {% endfor %}
+
+    <br> 
+
+  
+{% endblock content %}

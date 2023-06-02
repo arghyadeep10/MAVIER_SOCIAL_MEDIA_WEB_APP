@@ -1,0 +1,37 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+<div class="alert alert-info" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+    Your Following
+</div>  
+
+{% if counter == 0 %}
+    <div class="alert alert-info" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+        You are not Following anyone. Follow people you know and like to view their posts 
+    </div> 
+{% endif %}
+<div style="padding-left: 80px;"> 
+    {% for user in users %}
+        <div class="card" style="width: 18rem; height: 32rem; float: left;">
+            <div style="height: 16rem; width: 17rem;">
+                <img style="border-radius: 50%;" src="{{ user.userprofile.image.url }}" class="card-img-top" alt="Profile Picture">
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+            <p class="card-text" style="margin-bottom: 0px; color: blue; font-weight: bold; font-family: 'JetBrains Mono', monospace; ">{{ user.username }}</p>
+            {% if user.userprofile.country_of_residence %}
+                <span class="badge bg-primary rounded-pill">{{ user.userprofile.country_of_residence }}</span>
+                <br>
+            {% endif %}
+            {% if user.userprofile.bio %}
+                <p class="card-text" style="margin-top: 10px;">{{ user.userprofile.bio }}</p>
+            {% endif %}
+            <a href="{% url 'app-user-detail' user.id %}" class="btn btn-primary" style="margin-top: 8px;">View Profile</a>
+            </div>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock content %}

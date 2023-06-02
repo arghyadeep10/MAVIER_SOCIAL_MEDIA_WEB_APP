@@ -1,0 +1,108 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+<div class="alert alert-info" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+    Notifications
+</div>    
+
+{% for notification in notifications %}
+    {% if notification.notification_type == 'Post_Like' %}
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/post/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> New Like </a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/post/{{ notification.link_variable }}/"><button type="button" class="btn btn-primary">View the Post</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% elif notification.notification_type == 'SharedPost_Like' %}    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/sharedpost/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> New Like on your Shared Post</a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/sharedpost/{{ notification.link_variable }}/"><button type="button" class="btn btn-primary">View the Post</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% elif notification.notification_type == 'Post_Comment' %}    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/post/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> Comment on your Post </a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/post/{{ notification.link_variable }}/"><button type="button" class="btn btn-secondary">View the Post</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% elif notification.notification_type == 'SharedPost_Comment' %}    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/sharedpost/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> Comment on your Shared Post </a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/sharedpost/{{ notification.link_variable }}/"><button type="button" class="btn btn-dark">View the Post</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% elif notification.notification_type == 'Post_Shared' %}    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/post/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> Someone Shared Your Post </a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/post/{{ notification.link_variable }}/"><button type="button" class="btn btn-success">View your Post</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% elif notification.notification_type == 'New_Follower' %}    
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; background-color: white;">
+            <div class="media-body" style="margin-left: 10%;">
+                <div style="float: left;">
+                    <a class="mr-2" href="/user/{{ notification.link_variable }}/" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> New Follower </a>
+                    <br>
+                    <small style="color: rgb(59, 59, 36); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ notification.notification_date }} </small>
+                </div>
+                <div style="float: right;">
+                    <a href="/user/{{ notification.link_variable }}/"><button type="button" class="btn btn-danger">View their Profile</button></a>
+                </div>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: rgb(0, 0, 0); padding: 0%;">
+                <p class="article-content" style="color: black;"> {{ notification.notification_message }} </p>
+
+            </div>
+        </article>
+    {% endif %}
+{% endfor %}
+
+{% endblock content %}

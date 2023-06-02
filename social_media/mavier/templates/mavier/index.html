@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap');
+        /* .bg{
+        background-image: url("Backgrounds/Background1.png");
+        background-repeat:no-repeat;
+        background-size:100%;   
+    } */
+    </style>
+
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'mavier/main.css' %}" >
+
+    <title>Mavier</title>
+</head>
+<body id="bg" style="background-image: url('{% static "mavier/Backgrounds/Background7.png" %}');">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="{% url 'app-index' %}">
+                <img src="{% static 'mavier/Logo_Golden.png' %}" alt="" width="30" height="30" class="d-inline-block align-top">
+                Mavier
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'app-index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        About Mavier
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Github Repo</a></li>
+                        <li><a class="dropdown-item" href="#">Disclaimer</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">About Author</a></li>
+                        </ul>
+                    </li>
+                </ul>
+    
+                <form class="d-flex">
+                    <a href="{% url 'login' %}">
+                        <button class="btn btn-outline-primary me-2" type="button"> Login </button>
+                    </a>
+                    <a href="{% url 'register' %}">
+                        <button class="btn btn-outline-success me-2" type="button">Register</button>
+                    </a>
+                </form>
+              </div>
+            </div>
+          </nav>  
+    </header>
+
+    <main role="main" class="container">
+        <div class="row">
+            <div class="=col-md-8">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="container" style="margin-left: 11.625%; margin-right: 3.875%; margin-top: 7.75%; margin-bottom: 3.875%;">
+            <div style="font-size: 90px; font-family: 'Montserrat', sans-serif; color:rgb(9, 42, 102);">
+                Welcome to Mavier
+            </div>
+            <br>
+            <br>
+            <div style="font-size: 40px; font-family: 'Montserrat Alternates', sans-serif; color:rgb(0, 0, 0);">
+                Social Media for All of Us!
+            </div>
+            <div>
+                <table>
+                    <tr style="font-size: 25px; font-family: 'JetBrains Mono', monospace; color:rgb(0, 0, 0);">
+                        <td>Communicate &nbsp;</td>
+                        &nbsp;
+                        <td>Collaborate &nbsp;</td>
+                        &nbsp;
+                        <td>Create &nbsp;</td>
+                        &nbsp;
+                    </tr>                    
+                </table>
+            </div>
+            <br>
+            <br>
+            <div class="d-flex">
+                <a href="{% url 'register' %}"><button type="button" class="btn btn-warning btn-lg">Join Today</button></a>
+                &nbsp; 
+                &nbsp;
+                &nbsp; 
+                &nbsp;
+                <a href="{% url 'login' %}"><button type="button" class="btn btn-dark btn-lg">Already a User, Sign In</button></a>
+            </div>
+        </div>
+    </main>     
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</body>
+</html>

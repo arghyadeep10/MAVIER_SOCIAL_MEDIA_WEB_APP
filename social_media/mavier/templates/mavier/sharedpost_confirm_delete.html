@@ -1,0 +1,22 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <div style="background-color: rgb(240, 152, 125); margin-left: 3.875%; margin-right: 3.875%;">
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%;">
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h1 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Delete Post</h1> </legend>
+                        <br>
+                        <h2>Are you sure, you want to delete the post "{{ object.title }}"</h2>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+                        <a href = "{% url 'app-sharedpost-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+{% endblock content %}

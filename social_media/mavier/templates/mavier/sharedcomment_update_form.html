@@ -1,0 +1,26 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <div style="background-color: rgb(240, 152, 125); margin-left: 3.875%; margin-right: 3.875%;">
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%;">
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h1 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Update Comment</h1> </legend>
+                        <br>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+                            <textarea class="form-control" name="comment_content" rows="10"> {{ object.comment_content }} </textarea>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Update</button>
+                        <a href = "{% url 'app-sharedcomment-detail' object.id %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </div>
+{% endblock content %}

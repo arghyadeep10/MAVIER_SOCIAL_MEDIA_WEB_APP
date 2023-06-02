@@ -1,0 +1,51 @@
+{% extends "mavier/base.html" %}
+
+{% block content %}
+    <div style="background-color: rgb(240, 152, 125); margin-left: 3.875%; margin-right: 3.875%;">
+        <div class="content-section" style="margin-left: 15.5%; margin-right: 15.5%;">
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"> <h1 style="font-family: 'Montserrat', sans-serif; color:cornflowerblue;"> Share Post</h1> </legend>
+                        <br>
+                        <!-- {{ form.as_p }} -->
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" name="content" rows="10"></textarea>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Post</button>
+                        <a href = "{% url 'app-home' %}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>    
+        </div>
+
+        <!-- Shared Post  -->
+        <div class="alert alert-info" role="alert" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px; font-size: 25px; font-weight: bold; text-align: center;">
+            Post you are sharing
+        </div> 
+
+        <article class="media content-section" style="margin-left: 15.5%; margin-right: 15.5%; padding: 10px 5px;">
+            <img class="rounded-circle article-img" src="{{ PostToBeShared.author.userprofile.image.url }}" alt="Pro" style="float: left;">
+            <div class="media-body" style="margin-left: 10%;">
+                <a class="mr-2" href="#" style="color: black; text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ PostToBeShared.author }} </a>
+                <br>
+                <small style="color: rgb(205, 207, 81); text-decoration: none; font-weight: bold; font-family: 'Ubuntu', sans-serif;"> {{ PostToBeShared.date_posted }} </small>
+                <hr style="width:100%; height:2px; text-align:left;margin-left:0; margin-top: 0em; margin-bottom: 0.2em; color: white; padding: 0%;">
+                <h2 class="article-title">{{ PostToBeShared.title }}</h2>
+                <p class="article-content"> {{ PostToBeShared.content }} </p>
+
+            </div>
+        </article>
+
+        <br>
+
+    </div>
+{% endblock content %}
